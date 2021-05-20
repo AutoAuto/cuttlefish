@@ -398,11 +398,14 @@ vsoc::CuttlefishConfig InitializeCuttlefishConfiguration(
   tmp_config_obj.set_cuttlefish_env_path(GetCuttlefishEnvPath());
 
   std::vector<int> instance_nums;
-  for (int i = 0; i < FLAGS_num_instances; i++) {
+  /*for (int i = 0; i < FLAGS_num_instances; i++) {
     instance_nums.push_back(vsoc::GetInstance() + i);
-  }
+  }*/
+    instance_nums.push_back(vsoc::GetInstance() + 0);
 
+    instance_nums.push_back(vsoc::GetInstance() + 1);
   for (const auto& num : instance_nums) {
+    LOG(ERROR) << "Instance " << num;
     auto instance = tmp_config_obj.ForInstance(num);
     auto const_instance = const_cast<const vsoc::CuttlefishConfig&>(tmp_config_obj)
         .ForInstance(num);

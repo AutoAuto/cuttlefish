@@ -249,16 +249,20 @@ StreamerLaunchResult LaunchVNCServer(
     const vsoc::CuttlefishConfig& config,
     cvd::ProcessMonitor* process_monitor,
     std::function<bool(MonitorEntry*)> callback) {
-  auto instance = config.ForDefaultInstance();
-  // Launch the vnc server, don't wait for it to complete
-  auto port_options = "-port=" + std::to_string(instance.vnc_server_port());
-  cvd::Command vnc_server(config.vnc_server_binary());
-  vnc_server.AddParameter(port_options);
 
-  auto server_ret = CreateStreamerServers(&vnc_server, config);
+  auto instances = config.Instances();
+  StreamerLaunchResult server_ret;
+  for (const auto& instance : instances) {
+  	// Launch the vnc server, don't wait for it to complete
+  	auto port_options = "-port=" + std::to_string(instance.vnc_server_port());
+  	cvd::Command vnc_server(config.vnc_server_binary());
+  	vnc_server.AddParameter(port_options);
 
-  process_monitor->StartSubprocess(std::move(vnc_server), callback);
-  server_ret.launched = true;
+        server_ret = CreateStreamerServers(&vnc_server, config);
+
+  	process_monitor->StartSubprocess(std::move(vnc_server), callback);
+  	server_ret.launched = true;
+  }
   return server_ret;
 }
 
