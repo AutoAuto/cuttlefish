@@ -587,7 +587,8 @@ Error CfHWC2::Display::createLayer(hwc2_layer_t* outLayerId) {
     auto layer = *mLayers.emplace(std::make_shared<Layer>(*this));
     mDevice.mLayers.emplace(std::make_pair(layer->getId(), layer));
     *outLayerId = layer->getId();
-    ALOGV("[%" PRIu64 "] created layer %" PRIu64, mId, *outLayerId);
+    ALOGE("XXXXXXXXXX [%" PRIu64 "] created layer %" PRIu64, mId, *outLayerId);
+    ALOGE("XXXXXXXXXX CREATE LAYER DISPID %d", getHwc1Id());
     markGeometryChanged();
     return Error::None;
 }

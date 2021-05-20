@@ -330,10 +330,14 @@ static int cvd_hwc_prepare(hwc_composer_device_1_t* dev, size_t numDisplays,
                            hwc_display_contents_1_t** displays) {
   if (!numDisplays || !displays) return 0;
 
+  ALOGE("XXXXXX PREPARE DISPLAYS %d", numDisplays);
+
   for (int disp = 0; disp < numDisplays; ++disp) {
     hwc_display_contents_1_t* list = displays[disp];
 
+  ALOGE("XXXXXX PREPARE DISPLAY %d", disp);
     if (!list) return 0;
+  ALOGE("XXXXXX PREPARE LAYERS %d", list->numHwLayers);
     if (!IsValidComposition(dev, list->numHwLayers, &list->hwLayers[0], false)) {
       LOG_ALWAYS_FATAL("%s: Invalid composition requested", __FUNCTION__);
       return -1;
@@ -349,9 +353,11 @@ static int cvd_hwc_set(hwc_composer_device_1_t* dev, size_t numDisplays,
   if (!numDisplays || !displays) return 0;
 
   int retval = -1;
+  ALOGE("XXXXXX SET DISPLAYS  %d", numDisplays);
   for (int disp = 0; disp < numDisplays; ++disp) {
     hwc_display_contents_1_t* contents = displays[disp];
     if (!contents) return 0;
+  ALOGE("XXXXXX SET DISPL %d LAYERS %d", disp, contents->numHwLayers);
 
     hwc_layer_1_t* layers = &contents->hwLayers[0];
     if (contents->numHwLayers == 1 &&

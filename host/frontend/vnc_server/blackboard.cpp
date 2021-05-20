@@ -124,7 +124,7 @@ void BlackBoard::ResetToZero(SeqNumberVec* seq_nums) {
 void BlackBoard::FrameBufferUpdateRequestReceived(
     const VncClientConnection* conn) {
   std::lock_guard<std::mutex> guard(m_);
-  DLOG(INFO) << "Received frame buffer update request";
+  LOG(INFO) << "Received frame buffer update request";
   auto& state = GetStateForClient(conn);
   state.ready_to_receive = true;
   state.new_frame_cv.notify_one();

@@ -649,30 +649,35 @@ void VncClientConnection::NormalSession() {
       return;
     }
     auto msg_type = msg.front();
-    DLOG(INFO) << "Received message type " << msg_type;
 
     switch (msg_type) {
       case kSetPixelFormatMessage:
+    LOG(INFO) << "Received message type PIXEL FORMAT";
         HandleSetPixelFormat();
         break;
 
       case kSetEncodingsMessage:
+    LOG(INFO) << "Received message type SET ENCODING";
         HandleSetEncodings();
         break;
 
       case kFramebufferUpdateRequestMessage:
+    LOG(INFO) << "Received message type FRAMEBUFFER UPDATE";
         HandleFramebufferUpdateRequest();
         break;
 
       case kKeyEventMessage:
+    LOG(INFO) << "Received message type KEY EVENT";
         HandleKeyEvent();
         break;
 
       case kPointerEventMessage:
+    LOG(INFO) << "Received message type POINTER EVENT";
         HandlePointerEvent();
         break;
 
       case kClientCutTextMessage:
+    LOG(INFO) << "Received message type CUT";
         HandleClientCutText();
         break;
 

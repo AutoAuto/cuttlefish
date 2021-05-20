@@ -71,6 +71,7 @@ void SocketBasedScreenConnector::ServerLoop(int frames_fd) {
       LOG(ERROR) << "Disconnected fd returned from accept";
       continue;
     }
+    LOG(INFO) << "Accept DONE";
     while (conn->IsOpen()) {
       int32_t size = 0;
       if (conn->Read(&size, sizeof(size)) < 0) {
@@ -88,6 +89,8 @@ void SocketBasedScreenConnector::ServerLoop(int frames_fd) {
         size -= read;
         buff += read;
       }
+
+      LOG(INFO) << "BroadcastNewFrame";
       BroadcastNewFrame(current_buffer);
       current_buffer = (current_buffer + 1) % NUM_BUFFERS_;
     }

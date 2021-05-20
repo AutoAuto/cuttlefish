@@ -27,6 +27,8 @@
 #include <algorithm>
 #include <vector>
 
+
+
 #include "common/libs/glog/logging.h"
 #include "common/libs/fs/shared_select.h"
 
@@ -215,6 +217,7 @@ SharedFD SharedFD::Accept(const FileInstance& listener) {
 SharedFD SharedFD::Dup(int unmanaged_fd) {
   int fd = fcntl(unmanaged_fd, F_DUPFD_CLOEXEC, 3);
   int error_num = errno;
+  LOG(INFO) << "SharedFD::Dup NEW FD " << fd;
   return SharedFD(std::shared_ptr<FileInstance>(new FileInstance(fd, error_num)));
 }
 

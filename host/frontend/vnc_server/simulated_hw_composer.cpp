@@ -17,6 +17,7 @@
 #include "host/frontend/vnc_server/simulated_hw_composer.h"
 
 #include <gflags/gflags.h>
+#include <glog/logging.h>
 
 #include "host/frontend/vnc_server/vnc_utils.h"
 #include "host/libs/config/cuttlefish_config.h"
@@ -83,6 +84,8 @@ void SimulatedHWComposer::MakeStripes() {
     raw_screen.assign(frame_pixels,
                       frame_pixels + ScreenConnector::ScreenSizeInBytes());
 
+	LOG(INFO) << " SimulatedHWComposer FRAME " << frame_number << " kNumStripes " << kNumStripes; 
+
     for (int i = 0; i < kNumStripes; ++i) {
       ++stripe_seq_num;
       std::uint16_t y = (screen_height / kNumStripes) * i;
@@ -119,6 +122,7 @@ void SimulatedHWComposer::MakeStripes() {
   };
 
   while (!closed()) {
+	LOG(INFO) << " SimulatedHWComposer WaitForAtLeastOneClientConnection"; 
     bb_->WaitForAtLeastOneClientConnection();
 
     screen_connector_->OnFrameAfter(previous_frame_number, frame_callback);
